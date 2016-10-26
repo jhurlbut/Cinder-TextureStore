@@ -72,6 +72,7 @@ namespace rph {
     
     ci::gl::TextureRef TextureStore::load(const std::string &url, ci::gl::Texture::Format fmt, bool isGarbageCollectable, bool runGarbageCollector)
     {
+      if(runGarbageCollector)garbageCollect();
         // if texture already exists, return it immediately
         if (mTextureRefs.find( url ) != mTextureRefs.end())
             return mTextureRefs[ url ];
