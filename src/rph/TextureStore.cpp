@@ -338,7 +338,7 @@ namespace rph {
     }
     
     void TextureStore::drawAllStoredTextures(float width, float height){
-        
+				ci::gl::color(ci::Color::white());
         int numOfColumns = ci::math<float>::floor( ci::app::getWindowWidth() / width );
         int count = 0;
         int rows = 0;
