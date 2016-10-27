@@ -48,6 +48,7 @@ namespace rph {
     }
 
     TextureStore::~TextureStore(){
+				std::vector<std::string> validFileExtension = { ".png", ".jpg", ".jpeg" };
         // stop thread
         mShouldQuit = true;
         try{
@@ -72,10 +73,14 @@ namespace rph {
     
     ci::gl::TextureRef TextureStore::load(const std::string &url, ci::gl::Texture::Format fmt, bool isGarbageCollectable, bool runGarbageCollector)
     {
-      if(runGarbageCollector)garbageCollect();
+     
         // if texture already exists, return it immediately
-        if (mTextureRefs.find( url ) != mTextureRefs.end())
-            return mTextureRefs[ url ];
+			if (mTextureRefs.find(url) != mTextureRefs.end()){
+					auto tex = mTextureRefs[url];
+					if (runGarbageCollector)garbageCollect();
+					return tex;
+			}
+            
         
         // otherwise, check if the image has loaded and create a texture for it
         ci::Surface surface;
@@ -171,7 +176,7 @@ namespace rph {
         for ( ci::fs::directory_iterator it( dir ); it != ci::fs::directory_iterator(); ++it ){
             if ( ci::fs::is_regular_file( *it ) && hasValidFileExtension( it->path().extension() ) ){
                     //ci::gl::TextureRef t = load( dir.string() +"/"+ fileName , fmt, isGarbageCollectable, false );
-                    textureRefs.push_back( load( it->path().c_str() , fmt, isGarbageCollectable, false ) );
+                    textureRefs.push_back( load( it->path().string() , fmt, isGarbageCollectable, false ) );
             }
 //            else{
 //                ci::app::console() << "NOT loading: " <<  it->path().c_str() << std::endl;

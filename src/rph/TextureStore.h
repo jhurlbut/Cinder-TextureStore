@@ -73,7 +73,7 @@ namespace rph {
         void drawAllStoredTextures( float width = 100.0f, float height = 100.0f );
         void status();
         
-        std::vector<std::string> validFileExtension = {".png", ".jpg", ".jpeg"};
+        std::vector<std::string> validFileExtension;
         
       protected:
         void loadImagesThreadFn();
